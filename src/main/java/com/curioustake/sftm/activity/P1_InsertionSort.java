@@ -28,6 +28,7 @@ public class P1_InsertionSort implements Activity {
 
         if(count <= 1) {
             System.out.println("INPUT SIZE TO SMALL ");
+            return;
         }
 
         // INSERTION SORT ASCENDING
