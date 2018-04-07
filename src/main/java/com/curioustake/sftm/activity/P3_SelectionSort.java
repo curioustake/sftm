@@ -13,7 +13,7 @@ import java.util.Arrays;
  * Complexity (Time): O(n ^ 2)
  * */
 
-public class P2_RecursiveInsertionSort implements Activity {
+public class P3_SelectionSort implements Activity {
 
     enum SORT_ORDER { ASCENDING, DESCENDING}
 
@@ -31,38 +31,33 @@ public class P2_RecursiveInsertionSort implements Activity {
             return;
         }
 
-        // RECURSIVE INSERTION SORT ASCENDING
+        // SELECTION SORT ASCENDING
         Integer[] inputAsc = original.clone();
-        sort(inputAsc, inputAsc.length, SORT_ORDER.ASCENDING);
-        System.out.println("\n##################### RECURSIVE INSERTION SORT validateSortAscending #######################");
-        System.out.println("\nRECURSIVE INSERTION SORT ASCENDING SUCCESSFUL? [" + DataValidator.validateSortAscending(original, inputAsc, printResults) + "]\n");
+        sort(inputAsc, SORT_ORDER.ASCENDING);
+        System.out.println("\n###################### SELECTION SORT validateSortAscending ##############################");
+        System.out.println("\nSELECTION SORT ASCENDING SUCCESSFUL? [" + DataValidator.validateSortAscending(original, inputAsc, printResults) + "]\n");
         System.out.println("############################################################################################\n");
 
-        // RECURSIVE INSERTION SORT DESCENDING
+        // SELECTION SORT DESCENDING
         Integer[] inputDesc = original.clone();
-        sort(inputDesc, inputDesc.length, SORT_ORDER.DESCENDING);
-        System.out.println("\n#################### RECURSIVE INSERTION SORT validateSortDescending #######################");
-        System.out.println("\nRECURSIVE INSERTION SORT DESCENDING SUCCESSFUL? [" + DataValidator.validateSortDescending(original, inputDesc, printResults) + "]\n");
+        sort(inputDesc, SORT_ORDER.DESCENDING);
+        System.out.println("\n###################### SELECTION SORT validateSortDescending #############################");
+        System.out.println("\nSELECTION SORT DESCENDING SUCCESSFUL? [" + DataValidator.validateSortDescending(original, inputDesc, printResults) + "]\n");
         System.out.println("############################################################################################\n");
     }
 
-    private void sort(Integer[] input, final int size, SORT_ORDER sortOrder) {
-
-        if(size == 1)
-            return;
-
-        sort(input, size - 1, sortOrder);
-
-        Integer temp = input[size-1];
-        int j=size-2;
-        for(; j>=0; j--) {
-            if(swap(input[j], temp, sortOrder)) {
-                input[j+1] = input[j];
-            } else {
-                break;
+    private void sort(Integer[] input, SORT_ORDER sortOrder) {
+        for(int i=0; i<input.length; i++) {
+            int smallestIndex = i;
+            for(int j=i+1; j<input.length; j++) {
+                if(swap(input[smallestIndex], input[j], sortOrder)) {
+                    smallestIndex = j;
+                }
             }
+            Integer temp = input[smallestIndex];
+            input[smallestIndex] = input[i];
+            input[i] = temp;
         }
-        input[j+1] = temp;
     }
 
     private boolean swap(final Integer first, final Integer second, SORT_ORDER sortOrder) {
