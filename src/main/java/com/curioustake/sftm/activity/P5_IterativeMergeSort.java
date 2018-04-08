@@ -13,7 +13,7 @@ import java.util.Arrays;
  * Complexity (Time): O(n ^ 2)
  * */
 
-public class P5_MergeSortIterative implements Activity {
+public class P5_IterativeMergeSort implements Activity {
 
     enum SORT_ORDER { ASCENDING, DESCENDING}
 
