@@ -18,4 +18,15 @@ public class RandomDataGenerator {
 
         return randomIntegers;
     }
+
+    public static Integer[] getDistinctRandomIntegerArray(final int count, final int max, final boolean printResults) {
+        final Random random = new Random();
+
+        Integer []randomIntegers = random.ints(0, max).distinct().limit(count).boxed().toArray(Integer[]::new);
+
+        if(printResults)
+            System.out.println("RANDOM INTEGERS : " + Arrays.toString(randomIntegers));
+
+        return randomIntegers;
+    }
 }
