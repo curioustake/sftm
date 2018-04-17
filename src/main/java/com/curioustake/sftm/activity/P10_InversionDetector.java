@@ -4,7 +4,6 @@ import com.curioustake.sftm.utils.DataValidator;
 import com.curioustake.sftm.utils.RandomDataGenerator;
 
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Purpose
