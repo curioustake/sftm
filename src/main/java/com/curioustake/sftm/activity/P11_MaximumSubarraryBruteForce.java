@@ -4,7 +4,15 @@ import com.curioustake.sftm.utils.RandomDataGenerator;
 
 import java.util.Arrays;
 
-public class P11_MaximumSubarraryBruteForce {
+/**
+ * Purpose : Given and array of integers find a continuous sub structure that has the maximum sum
+ *
+ * Details: this is the brute force approach
+ *
+ * Complexity (Time): O(n ^ 2)
+ * */
+
+public class P11_MaximumSubarraryBruteForce  implements Activity {
     public void invoke(String[] args) {
         System.out.println( "Execute => " + Arrays.toString(args) );
 
@@ -41,7 +49,7 @@ public class P11_MaximumSubarraryBruteForce {
             }
         }
 
-        System.out.println("MAX SUB ARRAY SUM : [" + maxSum + "]");
+        //System.out.println("MAX SUB ARRAY SUM : [" + maxSum + "]");
 
         return Arrays.copyOfRange(input, maxSumStart, maxSumEnd+1);
     }
