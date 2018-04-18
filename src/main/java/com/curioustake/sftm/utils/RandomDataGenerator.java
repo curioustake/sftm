@@ -40,4 +40,26 @@ public class RandomDataGenerator {
 
         return randomIntegers;
     }
+
+    public static Integer[][] getRandomIntegerMatrix(final int size, final int max, final boolean printResults) {
+        return getRandomIntegerMatrix(size, size, max, printResults);
+    }
+
+    public static Integer[][] getRandomIntegerMatrix(final int row, final int column, final int max, final boolean printResults) {
+        final Random random = new Random();
+
+        Integer [][]randomMatrix = new Integer[row][];
+
+        for(int i=0; i<row; i++)
+            randomMatrix[i] = random.ints(-max, max).limit(column).boxed().toArray(Integer[]::new);
+
+        System.out.println("\n####################### RANDOM MATRIX ###############################");
+        if(printResults) {
+            for(int i=0; i<row; i++)
+                System.out.println(Arrays.toString(randomMatrix[i]));
+        }
+        System.out.println("#####################################################################\n");
+
+        return randomMatrix;
+    }
 }
