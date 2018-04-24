@@ -40,8 +40,12 @@ public class P15_HeapSortRecursive implements Activity {
     }
 
     private void sort(Integer[] input, SORT_ORDER sortOrder) {
-        for(int i=input.length-1; i>0; i--) {
-            buildHeap(input, i, sortOrder);
+        buildHeap(input, input.length-1, sortOrder);
+        swap(input, 0, input.length-1);
+
+        for(int i=input.length-2; i>0; i--) {
+            Double lastParentNode = Math.floor(((i) - 1)/2);
+            heapifyNode(input, 0, lastParentNode.intValue(), i, sortOrder);
             swap(input, 0, i);
         }
     }
