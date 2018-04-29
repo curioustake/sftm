@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class P20_CountingSort implements Activity {
 
-    public enum SORT_ORDER { ASCENDING, DESCENDING}
+    private enum SORT_ORDER { ASCENDING, DESCENDING}
 
     public void invoke(String[] args) {
         System.out.println( "Execute => " + Arrays.toString(args) );
@@ -46,13 +46,8 @@ public class P20_CountingSort implements Activity {
         System.out.println("############################################################################################\n");
     }
 
-    public Integer[] sort(Integer[] input, SORT_ORDER sortOrder) {
-        int max = -1;
-        for(int i=0; i<input.length; i++) {
-            if(input[i] > max)
-                max = input[i];
-        }
-        Integer []count = new Integer[max+1];
+    private Integer[] sort(Integer[] input, SORT_ORDER sortOrder) {
+        Integer[] count = getCount(input);
 
         for(int i=0; i<input.length; i++) {
             count[input[i]] = count[input[i]] == null ? 1 : (count[input[i]]+1);
@@ -65,6 +60,15 @@ public class P20_CountingSort implements Activity {
         }
 
         return order(input, count, sortOrder);
+    }
+
+    private Integer[] getCount(Integer[] input) {
+        int max = -1;
+        for(int i=0; i<input.length; i++) {
+            if(input[i] > max)
+                max = input[i];
+        }
+        return new Integer[max+1];
     }
 
     private Integer [] order(final Integer[] input, final Integer []count, SORT_ORDER sortOrder) {
