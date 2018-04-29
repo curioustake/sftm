@@ -30,4 +30,30 @@ public class DataValidator {
 
         return Arrays.equals(systemSorted, sorted);
     }
+
+    public static boolean validateSortAscending(final String[] original, final String[] sorted, final boolean printResult){
+        final String[] systemSorted = original.clone();
+
+        Arrays.parallelSort(systemSorted);
+
+        if(printResult) {
+            System.out.println("CONTROL  \t: " + Arrays.toString(systemSorted));
+            System.out.println("TREATMENT\t: " + Arrays.toString(sorted));
+        }
+
+        return Arrays.equals(systemSorted, sorted);
+    }
+
+    public static boolean validateSortDescending(final String[] original, final String[] sorted, final boolean printResult){
+        final String[] systemSorted = original.clone();
+
+        Arrays.parallelSort(systemSorted, Collections.reverseOrder());
+
+        if(printResult) {
+            System.out.println("CONTROL  \t: " + Arrays.toString(systemSorted));
+            System.out.println("TREATMENT\t: " + Arrays.toString(sorted));
+        }
+
+        return Arrays.equals(systemSorted, sorted);
+    }
 }

@@ -62,4 +62,32 @@ public class RandomDataGenerator {
 
         return randomMatrix;
     }
+
+    public static String[] getRandomStringArray(final int count, final int max, final boolean printResults) {
+        final Random random = new Random();
+
+        String []randomWords = new String[count];
+
+        for(int i=0; i<randomWords.length; i++) {
+            int wordLength = random.nextInt(max+1);
+
+            if(wordLength == 0)
+                wordLength = 1;
+
+            Integer []randomIntegers = random.ints(32, 128).limit(wordLength).boxed().toArray(Integer[]::new);
+//            Integer []randomIntegers = random.ints(65, 91).limit(wordLength).boxed().toArray(Integer[]::new);
+
+            String word = "";
+
+            for(int j=0; j<randomIntegers.length; j++)
+                word = word + Character.toString((char)randomIntegers[j].intValue());
+
+            randomWords[i] = word;
+        }
+
+        if(printResults)
+            System.out.println("RANDOM WORDS : " + Arrays.toString(randomWords));
+
+        return randomWords;
+    }
 }
