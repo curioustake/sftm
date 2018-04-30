@@ -4,7 +4,6 @@ import com.curioustake.sftm.utils.DataValidator;
 import com.curioustake.sftm.utils.RandomDataGenerator;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Purpose : Sort a given input
@@ -59,9 +58,9 @@ public class P22_RadixSortStrings implements Activity {
             for(int i=0; i<input.length; i++) {
                 if(input[i].length() >= j) {
                     int charVal = input[i].charAt(j-1);
-                    count[charVal- CHARACTER_SET_START]++;
+                    count[charVal- CHARACTER_SET_START + 1]++;
                 } else {
-                    count[CHARACTER_SET_SIZE-1]++;
+                    count[0]++;
                 }
             }
 
@@ -84,7 +83,7 @@ public class P22_RadixSortStrings implements Activity {
     }
 
     private Integer[] getCount() {
-        Integer[] count =  new Integer[CHARACTER_SET_SIZE];
+        Integer[] count =  new Integer[CHARACTER_SET_SIZE + 1];
         for(int i=0; i<count.length;i++) count[i] = 0;
         return count;
     }
@@ -95,10 +94,10 @@ public class P22_RadixSortStrings implements Activity {
         switch (sortOrder) {
             case ASCENDING:
                 for(int i=input.length-1; i>=0; i--) {
-                    int countIndex = CHARACTER_SET_SIZE-1;
+                    int countIndex = 0;
                     if(input[i].length() >= comparisonChar) {
                         int charVal = input[i].charAt(comparisonChar-1);
-                         countIndex = charVal - CHARACTER_SET_START;
+                         countIndex = charVal - CHARACTER_SET_START + 1;
                     }
 
                     int index = count[countIndex] - 1;
@@ -109,10 +108,10 @@ public class P22_RadixSortStrings implements Activity {
             case DESCENDING:
                 int lastIndex = input.length-1;
                 for(int i=0; i<input.length; i++) {
-                    int countIndex = CHARACTER_SET_SIZE-1;
+                    int countIndex = 0;
                     if(input[i].length() >= comparisonChar) {
                         int charVal = input[i].charAt(comparisonChar-1);
-                        countIndex = charVal - CHARACTER_SET_START;
+                        countIndex = charVal - CHARACTER_SET_START + 1;
                     }
 
                     int index = count[countIndex] - 1;
