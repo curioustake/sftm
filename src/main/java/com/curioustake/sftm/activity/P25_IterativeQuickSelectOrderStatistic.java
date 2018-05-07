@@ -1,5 +1,6 @@
 package com.curioustake.sftm.activity;
 
+import com.curioustake.sftm.utils.DataValidator;
 import com.curioustake.sftm.utils.RandomDataGenerator;
 
 import java.util.Arrays;
@@ -33,10 +34,7 @@ public class P25_IterativeQuickSelectOrderStatistic implements Activity {
         Integer[] treatment = original.clone();
         int orderStatistic = getOrderStatistic(treatment, 0, treatment.length-1, orderStatisticIndex);
         System.out.println("\n###################### Iterative Quick Select Order Statistic validate ##############################");
-        Integer[] control = original.clone();
-        Arrays.sort(control);
-        System.out.println("\nIterative Quick Select Order Statistic Control [" + orderStatisticIndex + "] = [" + control[orderStatisticIndex] + "]");
-        System.out.println("\nIterative Quick Select Order Statistic Treatment [" + orderStatisticIndex + "] = [" + orderStatistic + "]");
+        System.out.println("\nIterative Quick Select Order Statistic SUCCESSFUL? [" + DataValidator.validateOrderStatistic(original, orderStatisticIndex, orderStatistic,printResults) + "]\n");
         System.out.println("############################################################################################\n");
     }
 

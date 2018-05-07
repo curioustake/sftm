@@ -56,4 +56,17 @@ public class DataValidator {
 
         return Arrays.equals(systemSorted, sorted);
     }
+
+    public static boolean validateOrderStatistic(final Integer[] original, final int orderStatistic, final int treatment, final boolean printResult){
+        final Integer[] systemSorted = original.clone();
+
+        Arrays.parallelSort(systemSorted);
+
+        if(printResult) {
+            System.out.println("CONTROL  ["+ orderStatistic + "]\t: " + systemSorted[orderStatistic]);
+            System.out.println("TREATMENT["+ orderStatistic + "]\t: " + treatment);
+        }
+
+        return systemSorted[orderStatistic].equals(treatment);
+    }
 }
