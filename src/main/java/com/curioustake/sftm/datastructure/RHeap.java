@@ -2,7 +2,7 @@ package com.curioustake.sftm.datastructure;
 
 import java.util.Arrays;
 
-public class Heap {
+public class RHeap {
 
     public enum HEAP_TYPE{ MIN, MAX}
 
@@ -12,7 +12,7 @@ public class Heap {
     int size = -1;
     HEAP_TYPE type;
 
-    public Heap(final HEAP_TYPE type) {
+    public RHeap(final HEAP_TYPE type) {
         this.type = type;
     }
 
@@ -94,7 +94,7 @@ public class Heap {
             case MIN:
                 return first < second;
             default:
-                throw new RuntimeException("Invalid Heap Type");
+                throw new RuntimeException("Invalid RHeap Type");
         }
     }
 

@@ -1,6 +1,6 @@
 package com.curioustake.sftm.activity;
 
-import com.curioustake.sftm.datastructure.Heap;
+import com.curioustake.sftm.datastructure.RHeap;
 import com.curioustake.sftm.utils.DataValidator;
 import com.curioustake.sftm.utils.RandomDataGenerator;
 
@@ -43,7 +43,7 @@ public class P17_HeapDatastructure implements Activity {
 
     private void sort(Integer[] input, SORT_ORDER sortOrder) {
 
-        Heap heap = new Heap(sortOrder.equals(SORT_ORDER.ASCENDING) ? Heap.HEAP_TYPE.MIN : Heap.HEAP_TYPE.MAX);
+        RHeap heap = new RHeap(sortOrder.equals(SORT_ORDER.ASCENDING) ? RHeap.HEAP_TYPE.MIN : RHeap.HEAP_TYPE.MAX);
 
         Arrays.stream(input).forEach(i->{heap.put(i);});
 
