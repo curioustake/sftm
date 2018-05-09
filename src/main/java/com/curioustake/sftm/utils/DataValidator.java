@@ -63,9 +63,11 @@ public class DataValidator {
         Arrays.parallelSort(systemSorted);
 
         if(printResult) {
-            System.out.println("CONTROL  ["+ orderStatistic + "]\t: " + systemSorted[orderStatistic]);
-            System.out.println("TREATMENT["+ orderStatistic + "]\t: " + treatment);
+            System.out.println("SORTED  \t: " + Arrays.toString(systemSorted));
         }
+
+        System.out.println("CONTROL  ["+ orderStatistic + "]\t: " + systemSorted[orderStatistic]);
+        System.out.println("TREATMENT["+ orderStatistic + "]\t: " + treatment);
 
         return systemSorted[orderStatistic].equals(treatment);
     }
