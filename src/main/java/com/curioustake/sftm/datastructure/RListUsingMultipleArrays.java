@@ -19,6 +19,8 @@ public class RListUsingMultipleArrays {
         previous = new Integer[INITIAL_CAPACITY];
         key = new Integer[INITIAL_CAPACITY];
 
+        sentinel = 0;
+
         for(int i=1; i<next.length; i++) {
             next[i] = i+1;
 
