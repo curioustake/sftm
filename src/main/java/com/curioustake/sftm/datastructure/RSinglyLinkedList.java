@@ -1,11 +1,11 @@
 package com.curioustake.sftm.datastructure;
 
-public class RList {
+public class RSinglyLinkedList {
 
     Node sentinel;
     int nodeCount;
 
-    public RList() {
+    public RSinglyLinkedList() {
         sentinel = new Node();
         nodeCount = 0;
     }
@@ -32,10 +32,15 @@ public class RList {
     }
 
     public boolean add(Integer element) {
-        Node newNode = new Node(sentinel, sentinel.previous_, element);
+        Node newNode = new Node(sentinel, element);
 
-        sentinel.previous_ = newNode;
-        newNode.previous_.next_ = newNode;
+        Node current = sentinel.next_;
+
+        while(!current.next_.equals(sentinel)) {
+            current = current.next_;
+        }
+
+        current.next_ = newNode;
 
         nodeCount++;
 
@@ -44,15 +49,16 @@ public class RList {
 
     public boolean remove(Integer element) {
         Node current = sentinel.next_;
+        Node previous = sentinel;
 
         while(!current.equals(sentinel)) {
             if(current.key_.equals(element)) {
-                current.previous_.next_ = current.next_;
-                current.next_.previous_ = current.previous_;
+                previous.next_ = current.next_;
                 nodeCount--;
                 return true;
             }
 
+            previous = current;
             current = current.next_;
         }
 
@@ -104,30 +110,16 @@ public class RList {
 
     class Node {
         Node next_;
-        Node previous_;
         Integer key_;
 
         Node() {
             this.next_ = this;
-            this.previous_ = this;
             this.key_ = 0;
         }
 
-        Node(Node next, Node previous, Integer key) {
+        Node(Node next, Integer key) {
             this.next_ = next;
-            this.previous_ = previous;
             this.key_ = key;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "next_=" + next_ +
-                    ", previous_=" + previous_ +
-                    ", key_=" + key_ +
-                    '}';
         }
     }
 }
-
-
