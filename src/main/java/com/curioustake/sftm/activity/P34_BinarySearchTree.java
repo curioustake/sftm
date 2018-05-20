@@ -34,7 +34,7 @@ public class P34_BinarySearchTree implements Activity {
 
         Random random = new Random();
 
-        for(int i=0; i<original.length;) {
+        for(int i=0; i<original.length;i++) {
             OPERATIONS operation = control.isEmpty() ? OPERATIONS.PUT : OPERATIONS.values()[random.nextInt(OPERATIONS.IS_EMPTY.ordinal()  + 1)];
             int inputValue = original[i];
 
@@ -47,7 +47,7 @@ public class P34_BinarySearchTree implements Activity {
 
                     if((putControl != null && putTreatment != null) && !putControl.equals(putTreatment))
                         throwException(operation.name(), control, treatment);
-                    i++;
+//                    i++;
                     break;
                 case GET:
                     if((control.get(inputValue) != null && treatment.get(inputValue) != null) &&

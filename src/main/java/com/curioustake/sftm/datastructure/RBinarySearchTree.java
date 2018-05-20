@@ -137,16 +137,29 @@ public class RBinarySearchTree <K extends Comparable<K>, V> {
     }
 
     private Node higherNode(Node node) {
-        if(node == null || node.right_ == sentinel)
+        if(node == null)
             return null;
 
-        Node successor = node.right_;
-
-        while(successor.left_ != sentinel) {
-            successor = successor.left_;
+        if (node.right_ != sentinel) {
+            return firstNode(node.right_);
         }
 
-        return successor;
+        Node parent = node.parent_;
+
+        while (parent != null && parent.right_ == node) {
+            node = parent;
+            parent = parent.parent_;
+        }
+
+        return parent;
+    }
+
+    private Node firstNode(Node node) {
+        while(node.left_ != sentinel) {
+            node = node.left_;
+        }
+
+        return node;
     }
 
     public K lowerKey(K key) {
@@ -155,16 +168,29 @@ public class RBinarySearchTree <K extends Comparable<K>, V> {
     }
 
     private Node lowerNode(Node node) {
-        if(node == null || node.left_ == sentinel)
+        if(node == null)
             return null;
 
-        Node predecessor = node.left_;
-
-        while(predecessor.right_ != sentinel) {
-            predecessor = predecessor.right_;
+        if(node.left_ != sentinel) {
+            return lastNode(node.left_);
         }
 
-        return predecessor;
+        Node parent = node.parent_;
+
+        while(parent != null && parent.left_ == node){
+            node = parent;
+            parent = parent.parent_;
+        }
+
+        return parent;
+    }
+
+    private Node lastNode(Node node) {
+        while(node.right_ != sentinel) {
+            node = node.right_;
+        }
+
+        return node;
     }
 
     public boolean containsKey(K key) {
