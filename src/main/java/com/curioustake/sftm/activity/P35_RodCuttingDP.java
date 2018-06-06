@@ -49,9 +49,15 @@ public class P35_RodCuttingDP implements Activity {
         optimizedSolutionMemoized.entrySet().stream().forEach(e -> System.out.println(String.format("length %s | pieces %s", e.getKey(), e.getValue())));
         System.out.println("\nMaximized Price: " + getCutPrice(priceList, optimizedSolutionMemoized));
 
-//        if(getCutPrice(priceList, optimizedSolution) != getCutPrice(priceList, optimizedSolutionMemoized)) {
-//            throw new RuntimeException("Different Optimized prices");
-//        }
+        // Bottom Up DP
+        Map<Integer, Integer> optimizedSolutionBottomUp = optimizeCutsBottomUp(priceList, randomRodLength);
+        System.out.println("\nMaximized Solution Bottom Up");
+        optimizedSolutionBottomUp.entrySet().stream().forEach(e -> System.out.println(String.format("length %s | pieces %s", e.getKey(), e.getValue())));
+        System.out.println("\nMaximized Price: " + getCutPrice(priceList, optimizedSolutionBottomUp));
+
+        if(getCutPrice(priceList, optimizedSolutionBottomUp) != getCutPrice(priceList, optimizedSolutionMemoized)) {
+            throw new RuntimeException("Different Optimized prices");
+        }
     }
 
     private Map<Integer, Integer> optimizeCutsBruteForce(Integer[] priceList, int rodLength) {
@@ -99,6 +105,28 @@ public class P35_RodCuttingDP implements Activity {
             }
         }
         return maxCut;
+    }
+
+    private Map<Integer, Integer> optimizeCutsBottomUp(Integer[] priceList, int rodLength) {
+        final Map<Integer, Map<Integer, Integer>> bottomUpCuts = new HashMap<>();
+
+        for(int i=1; i<=rodLength; i++) {
+            Map<Integer, Integer> maxCut = new HashMap<>();
+            maxCut.put(i, 1);
+            int maxCutPrice = priceList[i - 1];
+
+            for(int j=1; j<i; j++) {
+                if(maxCutPrice < (getCutPrice(priceList, bottomUpCuts.get(i-j)) + priceList[j-1])) {
+                    Map<Integer, Integer> optimizedCut = new HashMap<>();
+                    bottomUpCuts.get(i-j).entrySet().stream().forEach(e->optimizedCut.put(e.getKey(), e.getValue()));
+                    optimizedCut.put(j, optimizedCut.containsKey(j) ? optimizedCut.get(j)+1 : 1);
+                    maxCut = optimizedCut;
+                    maxCutPrice = getCutPrice(priceList, bottomUpCuts.get(i-j)) + priceList[j-1];
+                }
+            }
+            bottomUpCuts.put(i, maxCut);
+        }
+        return bottomUpCuts.get(rodLength);
     }
 
     private int getCutPrice(Integer[] priceList, Map<Integer, Integer> optimizedCut) {
