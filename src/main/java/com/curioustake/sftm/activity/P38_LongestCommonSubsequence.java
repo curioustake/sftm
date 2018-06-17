@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class P38_LongestCommonSubsequence implements Activity {
 
+    public static final int CHARSET_MAX = 91;
+    public static final int CHARSET_MIN = 65;
+
     public void invoke(String[] args) {
         System.out.println( "Execute => " + Arrays.toString(args) );
 
@@ -20,8 +23,8 @@ public class P38_LongestCommonSubsequence implements Activity {
             return;
         }
 
-        String sequence1 = RandomDataGenerator.getRandomString(length1, 65, 90, printResult);
-        String sequence2 = RandomDataGenerator.getRandomString(length2, 65, 90, printResult);
+        String sequence1 = RandomDataGenerator.getRandomString(length1, CHARSET_MIN, CHARSET_MAX, printResult);
+        String sequence2 = RandomDataGenerator.getRandomString(length2, CHARSET_MIN, CHARSET_MAX, printResult);
 
 //        String bruteForce = lcsBruteForce(sequence1, sequence1.length(), sequence2, sequence2.length());
 //        System.out.println("\nBruteForce LCS");
