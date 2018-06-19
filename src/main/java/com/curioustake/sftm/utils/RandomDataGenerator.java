@@ -69,6 +69,25 @@ public class RandomDataGenerator {
         return word;
     }
 
+    public static String[] getRandomStringArray(final int count, final int length, final int charsetMin, final int charsetMax, final boolean printResults) {
+        String[] words = new String[count];
+
+        final Random random = new Random();
+        for(int i=0; i<count; i++) {
+            int wordLength = random.nextInt(length+1);
+
+            if(wordLength == 0)
+                wordLength = 2;
+
+            words[i] = RandomDataGenerator.getRandomString(wordLength, charsetMin, charsetMax, false);
+        }
+
+        if(printResults)
+            System.out.println("RANDOM WORDS : " + Arrays.toString(words));
+
+        return words;
+    }
+
     public static String[] getRandomStringArray(final int count, final int max, final boolean printResults) {
         final Random random = new Random();
 
