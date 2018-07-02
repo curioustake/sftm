@@ -1,8 +1,10 @@
 package com.curioustake.sftm.activity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -43,13 +45,16 @@ public class P42_TravelingSalesman  implements Activity {
         Path dpMemoized = shortestPathDPMemoized(cityDistances, 0, 0, unvisitedCities, new HashMap<>());
         System.out.println("Path DP Memoized " + dpMemoized);
 
+        Path dpBottomUp = shortestPathDPBottomUp(cityDistances, 0, unvisitedCities);
+        System.out.println("Path DP BottomUp " + dpBottomUp);
+
         if(printResult) {
             Arrays.stream(cityDistances).forEach(c -> System.out.println(Arrays.toString(c)));
             generateGraph(size, cityDistances, 0, dpMemoized.pathStr_);
         }
 
-//        if((bruteForce.pathStr_.compareTo(dpMemoized.pathStr_) != 0 && (bruteForce.cost_ != dpMemoized.cost_)))
-//            throw new RuntimeException("Something got screwed in the DP implementation");
+        if((dpBottomUp.pathStr_.compareTo(dpMemoized.pathStr_) != 0 && (dpBottomUp.cost_ != dpMemoized.cost_)))
+            throw new RuntimeException("Something got screwed in the DP implementation");
     }
 
     private Path shortestPathBruteForce(final int[][] distances, int source, int destination, final Set<Integer> unvisitedCities) {
@@ -133,6 +138,75 @@ public class P42_TravelingSalesman  implements Activity {
 
         String pathStr_;
         long cost_;
+        List<Integer> cities_;
+    }
+
+    private Path shortestPathDPBottomUp(final int[][] distances, final int source, final Set<Integer> cities) {
+        List<Path> startCities = new ArrayList<>();
+
+        cities.stream().forEachOrdered(c -> {
+            Path p = new Path();
+            p.cost_ = 0;
+            p.cities_ = new ArrayList<>();
+            p.cities_.add(c);
+            startCities.add(p);
+        });
+
+        List<Path> paths = startCities;
+        for(int i=1; i<cities.size(); i++) {
+            List<Path> newPathList = new ArrayList<>();
+            paths.stream().forEach(p -> {
+                cities.stream().forEachOrdered(c -> {
+                    if(!p.cities_.contains(c)) {
+                        Path newPath = new Path();
+
+                        newPath.cities_ = new ArrayList<>(p.cities_);
+                        newPath.cities_.add(c);
+
+                        if(p.cities_.size() == 1) {
+                            newPath.cost_ = distances[p.cities_.get(0)][c];
+                        } else
+                            if(p.cities_.size() == 2) {
+                            newPath.cost_ = p.cost_ + distances[p.cities_.get(0)][c] + distances[p.cities_.get(p.cities_.size()-1)][c];
+                        } else {
+                            newPath.cost_ = p.cost_ + distances[p.cities_.get(0)][c] +
+                                    distances[p.cities_.get(p.cities_.size()-1)][c] - distances[p.cities_.get(0)][p.cities_.get(p.cities_.size()-1)];
+                        }
+                        newPathList.add(newPath);
+                    }
+                });
+            });
+
+            paths = newPathList;
+        }
+
+        Path shortestPath = null;
+        for(int i=0; i< paths.size(); i++) {
+            Path p = paths.get(i);
+
+            long cost = p.cost_ + distances[source][p.cities_.get(0)] +
+                    distances[p.cities_.get(p.cities_.size()-1)][source] - distances[p.cities_.get(0)][p.cities_.get(p.cities_.size()-1)];
+
+            if((shortestPath == null) || (shortestPath.cost_ > cost)) {
+                Path newPath = new Path();
+
+                StringBuilder sb = new StringBuilder(String.valueOf(source));
+                p.cities_.stream().forEach(c -> {
+                    sb.append(" -- " + c);
+                });
+                sb.append(" -- " + source);
+                newPath.pathStr_ = sb.toString();
+
+                newPath.cities_ = new ArrayList<>();
+                newPath.cities_.add(source);
+                newPath.cities_.addAll(p.cities_);
+
+                newPath.cost_ = cost;
+
+                shortestPath = newPath;
+            }
+        }
+        return shortestPath;
     }
 
     private void generateGraph(int size, int[][] cityDistances, int startingCity, String shortestPath) {
